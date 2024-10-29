@@ -15,7 +15,7 @@ import pandas as pd
 
 import pickle
 
-with open("/model_svm.pkl", "rb") as file:
+with open("/mount/src/my-qc-app/model_svm.pkl", "rb") as file:
     svm_model = pickle.load(file)
 
 
