@@ -166,7 +166,7 @@ print(mydata.y.value_counts())
 
 # take a look
 print(mydata.head())
-display(mydata.shape)
+st.text(mydata.shape)
 mydata['y'].value_counts() / mydata.shape[0]
 
 
