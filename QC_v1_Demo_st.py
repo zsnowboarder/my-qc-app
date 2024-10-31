@@ -24,7 +24,7 @@ with open("/mount/src/my-qc-app/model_svm.pkl", "rb") as file:
 
 # create interface
 
-col1, col2, col3 = st.columns(1,5,1)
+col1, col2, col3 = st.columns([1,5,1])
 
 intro = """This demo showcases a simple yet powerful tool designed for classifying police reports using machine learning.\n
 Despite being a very basic model trained on just 40 data points without any text pre-processing, feature engineering, and model fine-tuning, 
