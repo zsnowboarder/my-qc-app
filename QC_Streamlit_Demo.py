@@ -9,7 +9,11 @@
 
 # In[2]:
 
-
+import nltk
+# Download necessary NLTK data files
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
 import numpy as np
 import pandas as pd
 import string
@@ -18,7 +22,7 @@ import streamlit as st
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction import _stop_words
-import nltk
+
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
 from spellchecker import SpellChecker
