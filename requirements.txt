@@ -1,6 +1,3 @@
 numpy
 pandas
 string
-streamlit
-nltk
-pyspellchecker
