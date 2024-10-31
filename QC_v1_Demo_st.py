@@ -24,7 +24,6 @@ with open("/mount/src/my-qc-app/model_svm.pkl", "rb") as file:
 
 # create interface
 
-col1, col2, col3 = st.columns([1,5,1])
 
 intro = """This demo showcases a simple yet powerful tool designed for classifying police reports using machine learning.\n
 Despite being a very basic model trained on just 40 data points without any text pre-processing, feature engineering, and model fine-tuning, 
@@ -37,6 +36,8 @@ st.write('')
 st.write(intro)
 st.write('')
 st.write('This model can classify assaults, thefts, TFA, BNE, and robberies. Offences outside of these categories will be classified with a low probability indicator.')
+
+col1, col2, col3 = st.columns([1,5,1])
 
 with col2:
     new_data = st.text_input("Enter a synopsis. The more text entered, the better the classification.", "I was walking and someone punched me for no reason. I had minor injuries. I reported the incident to police.")
