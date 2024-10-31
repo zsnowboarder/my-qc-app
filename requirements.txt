@@ -1,2 +1,7 @@
 streamlit
-pickle
+openai
+pandas
+numpy
+scikit-learn
+nltk
+pyspellchecker
