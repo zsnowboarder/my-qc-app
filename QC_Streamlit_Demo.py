@@ -10,6 +10,7 @@
 # In[2]:
 
 import nltk
+nltk.data.path.append('./nltk_data')
 # Download necessary NLTK data files
 nltk.download('punkt')
 nltk.download('wordnet')
