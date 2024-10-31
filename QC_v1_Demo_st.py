@@ -29,7 +29,7 @@ intro = """This demo showcases a simple yet powerful tool for classifying police
 Despite being a very basic model trained on just 40 data points without any advanced text pre-processing techniques and model fine-tuning, 
 it still achieves impressive classification results. Imagine the potential this tool when fully optimized 
 and trained on more extensive data. Machine learning can streamline the process of a diverse classification tasks, saving 
-valuable time and resources. It’s designed to be user-friendly and efficient, making it an invaluable asset for police departments and other industries."""
+valuable time and resources. It’s designed to be user friendly and efficient, making it an invaluable asset for police departments and other industries."""
 
 st.title("Incident Classifier")
 st.write('')
@@ -51,7 +51,7 @@ if st.button("Classify"):
     if pred_prob > 40:
         pred_msg = "I am " + str(pred_prob) + "% confident that this can be classified as " + new_pred[0] + "."
     else: 
-        pred_msg = "Please enter more text."
+        pred_msg = "Please enter more details about the incident and click Classify again. ."
         
     st.write(pred_msg)
 
