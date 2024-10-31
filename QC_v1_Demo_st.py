@@ -43,11 +43,12 @@ if st.button("Classify"):
     new_data = [new_data]
     new_pred = svm_model.predict(new_data)
     pred_prob = svm_model.predict_proba(new_data)[0]
+    pred_prob = round(max(pred_prob)*100)
 
     # clear the pred text label
     pred_msg = ""
     # set the result to a label
-    pred_msg = "I am " + str(round(max(pred_prob)*100)) + "% confident that this can be classified as " + new_pred[0] + "."
+    pred_msg = "I am " + str(pred_prob) + "% confident that this can be classified as " + new_pred[0] + "."
 
         
     st.write(pred_msg)
