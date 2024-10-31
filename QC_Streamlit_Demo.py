@@ -203,7 +203,7 @@ X_test_dtm = vect_tfidf.transform(X_test)
 # Naive Bayes Model
 
 nb = MultinomialNB()
-get_ipython().run_line_magic('time', 'nb.fit(X_train_dtm, y_train)')
+nb.fit(X_train_dtm, y_train)
 nb_pred = nb.predict(X_test_dtm)
 
 
@@ -213,7 +213,7 @@ nb_pred = nb.predict(X_test_dtm)
 # Logistic Regression
 
 logreg = LogisticRegression(class_weight="balanced")
-get_ipython().run_line_magic('time', 'logreg.fit(X_train_dtm, y_train)')
+logreg.fit(X_train_dtm, y_train)
 logreg_pred = logreg.predict(X_test_dtm)
 logreg_pred_prob = logreg.predict_proba(X_test_dtm)[:,1]
 
