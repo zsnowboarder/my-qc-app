@@ -51,7 +51,7 @@ if st.button("Classify"):
     if pred_prob > 40:
         pred_msg = "I am " + str(pred_prob) + "% confident that this can be classified as " + new_pred[0] + "."
     else: 
-        pred_msg = "Please enter more details about the incident and click Classify again. ."
+        pred_msg = "Please enter more details about the incident and click Classify again."
         
     st.write(pred_msg)
 
