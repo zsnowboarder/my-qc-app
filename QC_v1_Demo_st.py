@@ -47,10 +47,8 @@ if st.button("Classify"):
     # clear the pred text label
     pred_msg = ""
     # set the result to a label
-    if pred_prob > 40:
-        pred_msg = "I am " + str(round(max(pred_prob)*100)) + "% confident that this can be classified as " + new_pred[0] + "."
-    else:
-        pred_msg = "Please enter more text."
+    pred_msg = "I am " + str(round(max(pred_prob)*100)) + "% confident that this can be classified as " + new_pred[0] + "."
+
         
     st.write(pred_msg)
 
