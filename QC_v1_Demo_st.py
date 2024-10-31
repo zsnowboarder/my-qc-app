@@ -39,7 +39,7 @@ st.write('')
 st.write('This model can classify assaults, thefts, TFA, BNE, and robberies. Offences outside of these categories will be classified with a low probability indicator.')
 
 with col2:
-    new_data = st.text_input("Text", "I was walking and someone punched me for no reason. I had minor injuries. I reported the incident to police.")
+    new_data = st.text_input("Enter a synopsis. The more text entered, the better the classification.", "I was walking and someone punched me for no reason. I had minor injuries. I reported the incident to police.")
 
 if st.button("Classify"):
     new_data = [new_data]
