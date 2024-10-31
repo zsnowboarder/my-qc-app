@@ -28,10 +28,10 @@ with open("/mount/src/my-qc-app/model_svm.pkl", "rb") as file:
 intro = """This demo showcases a simple yet powerful tool for classifying police reports using machine learning and natural language processing.\n
 Despite being a very basic model trained on just 40 data points without any advanced text pre-processing techniques and model fine-tuning, 
 it still achieves impressive classification results. Imagine the potential this tool when fully optimized 
-and trained on more extensive data. Machine learning can streamline the process of UCR classification, saving 
-valuable time and resources. It’s designed to be user-friendly and efficient, making it an invaluable asset for police departments."""
+and trained on more extensive data. Machine learning can streamline the process of a diverse classification tasks, saving 
+valuable time and resources. It’s designed to be user-friendly and efficient, making it an invaluable asset for police departments and other industries."""
 
-st.title("QC Classifier")
+st.title("Incident Classifier")
 st.write('')
 st.write(intro)
 st.write('')
@@ -47,7 +47,11 @@ if st.button("Classify"):
     # clear the pred text label
     pred_msg = ""
     # set the result to a label
-    pred_msg = "I am " + str(round(max(pred_prob)*100)) + "% confident that this can be classified as " + new_pred[0] + "."
+    if pred_prob > 40:
+        pred_msg = "I am " + str(round(max(pred_prob)*100)) + "% confident that this can be classified as " + new_pred[0] + "."
+    else:
+        pred_msg = "Please enter more text."
+        
     st.write(pred_msg)
 
 
