@@ -61,6 +61,7 @@ with open('/mount/src/my-qc-app/vect_tfidf.pkl', 'rb') as file:
 with open("/mount/src/my-qc-app/model_logreg.pkl", "rb") as file:
     my_model = pickle.load(file)
 
+class_labels = my_model.classes_ # get the class name from the model.
 
 # In[25]:
 
@@ -83,12 +84,15 @@ st.write('This model can classify assaults, thefts, TFA, BNE, and robberies. Off
 new_data = st.text_area("Enter a synopsis. The more text entered, the better the classification.", height=200, value="I was walking and someone punched me for no reason. I had minor injuries. I reported the incident to police.")
 
 if st.button("Classify"):
+    
     new_data = {"X":[new_data]}
     df_new_data = pd.DataFrame(new_data)
     df_new_data = df_new_data.X.str.lower()
+    
     new_data_vect = vect_tfidf.transform(df_new_data)
     new_pred = my_model.predict(new_data_vect)
     pred_prob = my_model.predict_proba(new_data_vect)[0]
+    
     # sort the prob in descending order and then get the first and second highest
     sorted_index = np.argsort(pred_prob)[::-1]
     highest_prob = round(pred_prob[sorted_index[0]]*100)
@@ -99,16 +103,22 @@ if st.button("Classify"):
     # clear the pred text label
     pred_msg = ""
     # set the result to a label
-    if highest_prob > 50:
+    if highest_prob > 40:
         pred_msg = "I am " + str(highest_prob) + "% confident that this can be classified as " + new_pred_highest + "."
     
-    elif highest_prob > 30:
+    elif highest_prob > 20:
         pred_msg = "Since I was only trained on only an extremely small dataset, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred_highest + " or " + new_pred_second
     
     else: 
         pred_msg = "Please enter more details about the incident and click Classify again."
         
     st.write(pred_msg)
+    st.write('----------------------------------')
+    st.write('More details based on my training.')
+    
+    for label, prob in zip(class_labels, pred_prob):
+        print(f"Class: {label}, Probability: {prob * 100:.2f}%")
+    
 
 
 # In[ ]:
