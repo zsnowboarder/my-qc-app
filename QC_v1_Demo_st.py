@@ -87,6 +87,7 @@ if st.button("Classify"):
     sorted_index = np.argsort(pred_prob)[::-1]
     highest_prob = round(pred_prob[sorted_index[0]]*100)
     second_prob = round(pred_prob[sorted_index[1]]*100)
+    new_pred_highest = my_model.classes_[sorted_index[0]]
     new_pred_second = my_model.classes_[sorted_index[1]]
 
     # clear the pred text label
@@ -96,7 +97,7 @@ if st.button("Classify"):
         pred_msg = "I am " + str(highest_prob) + "% confident that this can be classified as " + new_pred[0] + "."
     
     elif highest_prob > 25:
-        pred_msg = "Since I was only trained on only an extremely small dataset, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred[0] + " or " + new_pred_second
+        pred_msg = "Since I was only trained on only an extremely small dataset, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred_highest + " or " + new_pred_second
     
     else: 
         pred_msg = "Please enter more details about the incident and click Classify again."
