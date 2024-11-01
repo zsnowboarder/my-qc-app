@@ -70,7 +70,7 @@ vocabulary_size = len(vect_tfidf.vocabulary_)
 
 
 intro = """This demo showcases a simple yet powerful tool for classifying police reports using machine learning and natural language processing.\n
-Despite being a very basic model trained on just 40 artificial data points and only """ + vocabulary_size + """ vocabularies without any advanced text pre-processing techniques and model fine-tuning, 
+Despite being a very basic model trained on just 40 artificial data points without any advanced text pre-processing techniques and model fine-tuning, 
 it still achieves impressive classification results. Imagine the potential this tool when fully optimized 
 and trained on more extensive data. Machine learning can streamline the process of a diverse classification tasks, saving 
 valuable time and resources. It’s designed to be user friendly and efficient, making it an invaluable asset for police departments and other industries."""
@@ -115,6 +115,7 @@ if st.button("Classify"):
     st.write(pred_msg)
     st.write('----------------------------------')
     st.write('**My accuracy will improve with more training data from real police reports. Probabilities are shown below.**')
+    st.write(vocabulary_size)
     
     for label, prob in zip(class_labels, pred_prob):
         st.write(f"**Category:** {label}  --->  **Probability:** {prob * 100:.2f}%")
