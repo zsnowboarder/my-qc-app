@@ -80,7 +80,7 @@ new_data = st.text_area("Enter a synopsis. The more text entered, the better the
 
 if st.button("Classify"):
     new_data = {"X":[new_data]}
-    df_new_data = df.DataFrome(new_data)
+    df_new_data = pd.DataFrome(new_data)
     df_new_data = df_new_data.X.str.lower()
     new_data_vect = vect_tfidf.transform(df_new_data)
     new_pred = my_model.predict(df_new_data)
