@@ -108,7 +108,7 @@ if st.button("Classify"):
     else: 
         pred_msg = "Please enter more details about the incident and click Classify again."
         
-    st.write(pred_msg, pred_prob)
+    st.write(pred_msg)
 
 
 # In[ ]:
