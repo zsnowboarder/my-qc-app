@@ -18,6 +18,9 @@ from nltk.stem import PorterStemmer
 from spellchecker import SpellChecker
 from nltk.corpus import wordnet
 
+nltk.download('wordnet')
+nltk.download('punkt')
+
 # In[17]:
 stopwords = _stop_words.ENGLISH_STOP_WORDS
 lemmatizer = WordNetLemmatizer()
