@@ -8,6 +8,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import pickle
 
 from sklearn.feature_extraction import _stop_words
 import nltk
@@ -17,9 +18,38 @@ from spellchecker import SpellChecker
 from nltk.corpus import wordnet
 
 # In[17]:
+stopwords = _stop_words.ENGLISH_STOP_WORDS
+lemmatizer = WordNetLemmatizer()
+stemmer = PorterStemmer()
+spell_check = SpellChecker(distance=1)
 
+def clean(doc): # doc is a string of text
+    #doc = " ".join([lemmatizer.lemmatize(token) for token in doc.split()])
+    doc = "".join([char for char in doc if char not in string.punctuation and not char.isdigit()])
+    doc = " ".join([token for token in doc.split() if token not in stopwords])
+    return doc
 
-import pickle
+def spell(doc):
+    doc = " ".join([spell_check.correction(token) for token in doc.split() if spell_check.correction(token) is not None])
+    return doc
+    
+# stemming
+def stem(doc): # doc is a string of text
+    doc = " ".join([stemmer.stem(token) for token in doc.split()])
+    return doc
+
+def lemmatize(doc): # doc is a string of text
+    doc = " ".join([lemmatizer.lemmatize(token) for token in doc.split()])
+    return doc
+
+# combined all preprocessors 
+def preprocessors(doc):
+    #doc = spell(doc) # very slow
+    doc = clean(doc)
+    doc = lemmatize(doc)
+    doc = stem(doc)
+    return doc
+
 
 with open('/mount/src/my-qc-app/vect_tfidf.pkl', 'rb') as file:
     vect_tfidf = pickle.load(file)
@@ -40,7 +70,7 @@ it still achieves impressive classification results. Imagine the potential this 
 and trained on more extensive data. Machine learning can streamline the process of a diverse classification tasks, saving 
 valuable time and resources. It’s designed to be user friendly and efficient, making it an invaluable asset for police departments and other industries."""
 
-st.title("Incident Classifier.")
+st.title("Incident Classifier")
 st.write('')
 st.write(intro)
 st.write('')
@@ -58,7 +88,7 @@ if st.button("Classify"):
     # clear the pred text label
     pred_msg = ""
     # set the result to a label
-    if pred_prob > 40:
+    if pred_prob > 30:
         pred_msg = "I am " + str(pred_prob) + "% confident that this can be classified as " + new_pred[0] + "."
     else: 
         pred_msg = "Please enter more details about the incident and click Classify again."
