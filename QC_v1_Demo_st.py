@@ -84,7 +84,7 @@ if st.button("Classify"):
     new_pred = my_model.predict(new_data)
     pred_prob = my_model.predict_proba(new_data)[0]
     # sort the prob in descending order and then get the first and second highest
-    sorted_index = np.argsort(pred_prob)[::-1)
+    sorted_index = np.argsort(pred_prob)[::-1]
     highest_prob = round(pred_prob[sorted_index[0]]*100)
     second_prob = round(pred_prob[sorted_index[1]]*100)
     new_pred_second = my_model.classes_[sorted_index[1]]
