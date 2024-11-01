@@ -99,12 +99,12 @@ if st.button("Classify"):
         pred_msg = "I am " + str(highest_prob) + "% confident that this can be classified as " + new_pred_highest + "."
     
     elif highest_prob > 25:
-        pred_msg = "Since I was only trained on only an extremely small dataset, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred_highest + " or " + new_pred_second + pred_prob
+        pred_msg = "Since I was only trained on only an extremely small dataset, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred_highest + " or " + new_pred_second
     
     else: 
         pred_msg = "Please enter more details about the incident and click Classify again."
         
-    st.write(pred_msg)
+    st.write(pred_msg, pred_prob)
 
 
 # In[ ]:
