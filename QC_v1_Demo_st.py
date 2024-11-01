@@ -83,13 +83,21 @@ if st.button("Classify"):
     new_data_vect = vect_tfidf.transform(new_data)
     new_pred = my_model.predict(new_data)
     pred_prob = my_model.predict_proba(new_data)[0]
-    pred_prob = round(max(pred_prob)*100)
+    # sort the prob in descending order and then get the first and second highest
+    sorted_index = np.argsort(pred_prob)[::-1)
+    highest_prob = round(pred_prob[sorted_index[0]]*100)
+    second_prob = round(pred_prob[sorted_index[1]]*100)
+    new_pred_second = my_model.classes_[sorted_index[1]]
 
     # clear the pred text label
     pred_msg = ""
     # set the result to a label
-    if pred_prob > 40:
+    if highest_prob > 50:
         pred_msg = "I am " + str(pred_prob) + "% confident that this can be classified as " + new_pred[0] + "."
+    
+    elif highest_prob > 25:
+        pred_msg = "Since I was only trained on only an extremely small dataset, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred[0] + " or " + new_pred_second
+    
     else: 
         pred_msg = "Please enter more details about the incident and click Classify again."
         
