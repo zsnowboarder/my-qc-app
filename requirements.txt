@@ -2,6 +2,7 @@ streamlit
 openai
 pandas
 numpy
+string
 scikit-learn
 nltk
 pyspellchecker
