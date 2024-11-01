@@ -106,7 +106,7 @@ if st.button("Classify"):
     if highest_prob > 30:
         pred_msg = "I am " + str(highest_prob) + "% confident that this can be classified as " + new_pred_highest + "."
     
-    elif highest_prob > 25:
+    elif highest_prob > 20:
         pred_msg = "Since I was trained on only an **extremely small dataset**, I will have to make an inference on your text input. It would be " + new_pred_highest + " or " + new_pred_second + " or both."
     
     else: 
