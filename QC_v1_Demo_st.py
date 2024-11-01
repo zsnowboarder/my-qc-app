@@ -87,8 +87,8 @@ if st.button("Classify"):
     df_new_data = pd.DataFrame(new_data)
     df_new_data = df_new_data.X.str.lower()
     new_data_vect = vect_tfidf.transform(df_new_data)
-    new_pred = my_model.predict(df_new_data)
-    pred_prob = my_model.predict_proba(df_new_data)[0]
+    new_pred = my_model.predict(new_data_vect)
+    pred_prob = my_model.predict_proba(new_data_vect)[0]
     # sort the prob in descending order and then get the first and second highest
     sorted_index = np.argsort(pred_prob)[::-1]
     highest_prob = round(pred_prob[sorted_index[0]]*100)
