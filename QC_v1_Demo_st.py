@@ -79,10 +79,12 @@ st.write('This model can classify assaults, thefts, TFA, BNE, and robberies. Off
 new_data = st.text_area("Enter a synopsis. The more text entered, the better the classification.", height=200, value="I was walking and someone punched me for no reason. I had minor injuries. I reported the incident to police.")
 
 if st.button("Classify"):
-    new_data = [new_data]
-    new_data_vect = vect_tfidf.transform(new_data)
-    new_pred = my_model.predict(new_data)
-    pred_prob = my_model.predict_proba(new_data)[0]
+    new_data = {"X":[new_data]}
+    df_new_data = df.DataFrome(new_data)
+    df_new_data = df_new_data.X.str.lower()
+    new_data_vect = vect_tfidf.transform(df_new_data)
+    new_pred = my_model.predict(df_new_data)
+    pred_prob = my_model.predict_proba(df_new_data)[0]
     # sort the prob in descending order and then get the first and second highest
     sorted_index = np.argsort(pred_prob)[::-1]
     highest_prob = round(pred_prob[sorted_index[0]]*100)
