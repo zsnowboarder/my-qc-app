@@ -107,17 +107,17 @@ if st.button("Classify"):
         pred_msg = "I am " + str(highest_prob) + "% confident that this can be classified as " + new_pred_highest + "."
     
     elif highest_prob > 20:
-        pred_msg = "Since I was only trained on only an extremely small dataset, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred_highest + " or " + new_pred_second
+        pred_msg = "Since I was only trained on only an **extremely small dataset**, I will provide two possibilties on something I have not been trained on. In this case either " + new_pred_highest + " or " + new_pred_second
     
     else: 
-        pred_msg = "Please enter more details about the incident and click Classify again."
+        pred_msg = "Please enter more details about the incident and click **Classify** again."
         
     st.write(pred_msg)
     st.write('----------------------------------')
-    st.write('More details based on my training. My accuracy will improve with more training data from real police reports.')
+    st.write('**More details based on my training. My accuracy will improve with more training data from real police reports.**')
     
     for label, prob in zip(class_labels, pred_prob):
-        st.write(f"Category: {label},, Probability: {prob * 100:.2f}%")
+        st.write(f"**Category:** {label}, "--->", **Probability:** {prob * 100:.2f}%")
     
 
 
