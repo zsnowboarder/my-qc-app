@@ -18,7 +18,7 @@ import pickle
 with open('/mount/src/my-qc-app/vect_tfidf.pkl', 'rb') as file:
     vect_tfidf = pickle.load(file)
     
-with open("/mount/src/my-qc-app/model_svm.pkl", "rb") as file:
+with open("/mount/src/my-qc-app/model_logreg.pkl", "rb") as file:
     svm_model = pickle.load(file)
 
 
