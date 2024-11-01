@@ -115,7 +115,7 @@ if st.button("Classify"):
     st.write(pred_msg)
     st.write('----------------------------------')
     st.write('**My accuracy will improve with more training data from real police reports. Probabilities are shown below.**')
-    st.write(vocabulary_size)
+    
     
     for label, prob in zip(class_labels, pred_prob):
         st.write(f"**Category:** {label}  --->  **Probability:** {prob * 100:.2f}%")
