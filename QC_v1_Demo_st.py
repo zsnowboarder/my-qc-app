@@ -15,6 +15,9 @@ import pandas as pd
 
 import pickle
 
+with open('/mount/src/my-qc-app/vect_tfidf.pkl', 'rb') as file:
+    vect_tfidf = pickle.load(file)
+    
 with open("/mount/src/my-qc-app/model_svm.pkl", "rb") as file:
     svm_model = pickle.load(file)
 
@@ -41,8 +44,9 @@ new_data = st.text_area("Enter a synopsis. The more text entered, the better the
 
 if st.button("Classify"):
     new_data = [new_data]
-    new_pred = svm_model.predict(new_data)
-    pred_prob = svm_model.predict_proba(new_data)[0]
+    new_data_vect = vect_tfidf.transform(new_data)
+    new_pred = svm_model.predict(new_data_vect)
+    pred_prob = svm_model.predict_proba(new_data_vect)[0]
     pred_prob = round(max(pred_prob)*100)
 
     # clear the pred text label
