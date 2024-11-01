@@ -9,6 +9,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
+from sklearn.feature_extraction import _stop_words
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
@@ -39,7 +40,7 @@ it still achieves impressive classification results. Imagine the potential this 
 and trained on more extensive data. Machine learning can streamline the process of a diverse classification tasks, saving 
 valuable time and resources. It’s designed to be user friendly and efficient, making it an invaluable asset for police departments and other industries."""
 
-st.title("Incident Classifier")
+st.title("Incident Classifier.")
 st.write('')
 st.write(intro)
 st.write('')
