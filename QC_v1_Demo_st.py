@@ -117,7 +117,7 @@ if st.button("Classify"):
     st.write('More details based on my training.')
     
     for label, prob in zip(class_labels, pred_prob):
-        st.write(f"Class: {label}, Probability: {prob * 100:.2f}%")
+        st.write(f"Category: {label},, Probability: {prob * 100:.2f}%")
     
 
 
