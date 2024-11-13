@@ -24,6 +24,9 @@ lemmatizer = WordNetLemmatizer()
 stemmer = PorterStemmer()
 spell_check = SpellChecker(distance=1)
 
+# must download wordnet
+nltk.download('wordnet')
+
 def clean(doc): # doc is a string of text
     #doc = " ".join([lemmatizer.lemmatize(token) for token in doc.split()])
     doc = "".join([char for char in doc if char not in string.punctuation and not char.isdigit()])
