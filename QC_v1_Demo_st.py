@@ -1,91 +1,103 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-#pip install --upgrade google-cloud-aiplatform
-#gcloud auth application-default login
+# In[15]:
 
+
+# Import libaries for the project
 import streamlit as st
-from google.cloud import aiplatform
-from google.oauth2 import service_account
+import numpy as np
+import pandas as pd
+import pickle
 
-import base64
-import vertexai
-from vertexai.generative_models import GenerativeModel, Part, SafetySetting
+from sklearn.feature_extraction import _stop_words
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.stem import PorterStemmer
+from spellchecker import SpellChecker
+from nltk.corpus import wordnet
 
-credentials_info = st.secrets["gsc_connections"]
-credentials = service_account.Credentials.from_service_account_info(credentials_info)
-# Authenticate using secrets in Streamlit Cloud
-def initialize_vertex_client():
-    # Build the credentials from Streamlit secrets
+# In[17]:
+stopwords = _stop_words.ENGLISH_STOP_WORDS
+lemmatizer = WordNetLemmatizer()
+stemmer = PorterStemmer()
+spell_check = SpellChecker(distance=1)
+
+def clean(doc): # doc is a string of text
+    #doc = " ".join([lemmatizer.lemmatize(token) for token in doc.split()])
+    doc = "".join([char for char in doc if char not in string.punctuation and not char.isdigit()])
+    doc = " ".join([token for token in doc.split() if token not in stopwords])
+    return doc
+
+def spell(doc):
+    doc = " ".join([spell_check.correction(token) for token in doc.split() if spell_check.correction(token) is not None])
+    return doc
     
-    aiplatform.init(project="eim-conventions", location="us-central1", credentials=credentials)
+# stemming
+def stem(doc): # doc is a string of text
+    doc = " ".join([stemmer.stem(token) for token in doc.split()])
+    return doc
+
+def lemmatize(doc): # doc is a string of text
+    doc = " ".join([lemmatizer.lemmatize(token) for token in doc.split()])
+    return doc
+
+# combined all preprocessors 
+def preprocessors(doc):
+    #doc = spell(doc) # very slow
+    doc = clean(doc)
+    doc = lemmatize(doc)
+    doc = stem(doc)
+    return doc
 
 
-
-def generate():
-    vertexai.init(project="eim-convention", location="northamerica-northeast1", credentials=credentials)
-    model = GenerativeModel(
-        "gemini-1.5-pro-002",
-        system_instruction=[textsi_1]
-    )
-    responses = model.generate_content(
-        [new_data],
-        generation_config=generation_config,
-        safety_settings=safety_settings,
-        stream=True,
-    )
-
-    curr_text = ""
-
-    for response in responses:
-        new_text = curr_text + response.text
-        
-    return rew_text
-
-with open("/mount/src/my-qc-app/model_logreg.pkl/instructions.txt", "r") as file:
-    textsi_1 = file.read()
+with open('/mount/src/my-qc-app/vect_tfidf.pkl', 'rb') as file:
+    vect_tfidf = pickle.load(file)
     
-text1 = """police negotiated with the suspect and took the suspect in custody. suspect is Bart Simpson. members have concluded the report."""
+with open("/mount/src/my-qc-app/model_svm.pkl", "rb") as file:
+    my_model = pickle.load(file)
 
-generation_config = {
-    "max_output_tokens": 8192,
-    "temperature": 1,
-    "top_p": 0.95,
-}
 
-safety_settings = [
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-    SafetySetting(
-        category=SafetySetting.HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold=SafetySetting.HarmBlockThreshold.OFF
-    ),
-]
+# In[25]:
 
-initialize_vertex_client()
+
+# create interface
+
+
+intro = """This demo showcases a simple yet powerful tool for classifying police reports using machine learning and natural language processing.\n
+Despite being a very basic model trained on just 40 artificial data points without any advanced text pre-processing techniques and model fine-tuning, 
+it still achieves impressive classification results. Imagine the potential this tool when fully optimized 
+and trained on more extensive data. Machine learning can streamline the process of a diverse classification tasks, saving 
+valuable time and resources. It’s designed to be user friendly and efficient, making it an invaluable asset for police departments and other industries."""
 
 st.title("Incident Classifier")
 st.write('')
 st.write(intro)
 st.write('')
 st.write('This model can classify assaults, thefts, TFA, BNE, and robberies. Offences outside of these categories will be classified with a low probability indicator.')
+
 new_data = st.text_area("Enter a synopsis. The more text entered, the better the classification.", height=200, value="I was walking and someone punched me for no reason. I had minor injuries. I reported the incident to police.")
 
-#if button is clicked
-if st.button("Generate Response"):
-    result = generate()
-    st.write(result)
+if st.button("Classify"):
+    new_data = [new_data]
+    new_data_vect = vect_tfidf.transform(new_data)
+    new_pred = my_model.predict(new_data)
+    pred_prob = my_model.predict_proba(new_data)[0]
+    pred_prob = round(max(pred_prob)*100)
+
+    # clear the pred text label
+    pred_msg = ""
+    # set the result to a label
+    if pred_prob > 40:
+        pred_msg = "I am " + str(pred_prob) + "% confident that this can be classified as " + new_pred[0] + "."
+    else: 
+        pred_msg = "Please enter more details about the incident and click Classify again."
+        
+    st.write(pred_msg)
 
 
 # In[ ]:
+
+
+
+
