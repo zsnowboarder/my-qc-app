@@ -84,6 +84,8 @@ st.write('This model can classify assaults, thefts, TFA, BNE, and robberies. Off
 new_data = st.text_area("Enter a synopsis. The more text entered, the better the classification.", height=200, value="I was walking and someone punched me for no reason. I had minor injuries. I reported the incident to police.")
 
 if st.button("Classify"):
+    placeholder = st.empty()
+    placeholder.text("Please wait...")
     new_data = [new_data]
     new_data_vect = vect_tfidf.transform(new_data)
     new_pred = my_model.predict(new_data)
@@ -98,7 +100,7 @@ if st.button("Classify"):
     else: 
         pred_msg = "Please enter more details about the incident and click Classify again."
         
-    st.write(pred_msg)
+    placeholder.text(pred_msg)
 
 
 # In[ ]:
