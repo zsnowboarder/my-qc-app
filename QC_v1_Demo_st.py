@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import string
+import time
 
 from sklearn.feature_extraction import _stop_words
 import nltk
@@ -86,6 +87,7 @@ new_data = st.text_area("Enter a synopsis. The more text entered, the better the
 if st.button("Classify"):
     placeholder = st.empty()
     placeholder.text("Please wait...")
+    time.sleep(1)
     new_data = [new_data]
     new_data_vect = vect_tfidf.transform(new_data)
     new_pred = my_model.predict(new_data)
